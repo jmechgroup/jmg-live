@@ -7,52 +7,24 @@
     <link rel="icon" type="image/jpeg" href="logo.jpg">
     <link rel="stylesheet" href="style.css"> 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
     <style>
-        /* Minimal overrides to keep layout clean */
-        .admin-box {
-            border: 1px solid #ddd;
-            padding: 30px;
-            margin-bottom: 30px;
-            background: #fff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        .delete-btn {
-            background: transparent;
-            color: red;
-            border: 1px solid red;
-            padding: 5px 10px;
-            font-size: 0.8rem;
-        }
+        .admin-box { border: 1px solid #ddd; padding: 30px; margin-bottom: 30px; background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .project-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .delete-btn { background: transparent; color: red; border: 1px solid red; padding: 5px 10px; font-size: 0.8rem; cursor: pointer; }
         .delete-btn:hover { background: red; color: white; }
-        .project-item {
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 10px 0; 
-            border-bottom: 1px solid #eee;
-        }
     </style>
 </head>
 <body>
-
     <header class="navbar">
         <div class="container nav-flex">
-            <a href="index.html" class="logo-link">
-                <div class="logo"><img src="logo.jpg" alt="JMECH GROUP" style="height: 70px; width: auto;"></div>
-            </a>
-            <nav id="nav-menu">
-                <a href="index.html">View Site</a>
-                <a href="gallery.html">View Gallery</a>
-            </nav>
+            <a href="index.html" class="logo-link"><div class="logo"><img src="logo.jpg" alt="JMECH GROUP" style="height: 70px; width: auto;"></div></a>
+            <nav id="nav-menu"><a href="index.html">View Site</a><a href="gallery.html">View Gallery</a></nav>
         </div>
     </header>
 
     <section class="section-padding bg-grey">
         <div class="container">
-            <div class="section-header">
-                <h2>Admin Dashboard</h2>
-            </div>
+            <div class="section-header"><h2>Admin Dashboard</h2></div>
 
             <div id="login-section" class="admin-box" style="max-width: 400px; margin: 0 auto;">
                 <h3 style="margin-bottom: 20px;">Authorized Access Only</h3>
@@ -62,13 +34,11 @@
             </div>
 
             <div id="admin-panel" style="display:none;">
-                
                 <div class="admin-box">
                     <h3 style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">Update Owner Photo</h3>
                     <input type="file" id="owner-image">
                     <button onclick="uploadOwner()" class="btn btn-primary">Update Photo</button>
                 </div>
-
                 <div class="admin-box">
                     <h3 style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">Add New Project</h3>
                     <input type="text" id="project-title" placeholder="Project Title">
@@ -80,7 +50,6 @@
                     <input type="file" id="project-image">
                     <button onclick="uploadProject()" class="btn btn-primary">+ Upload Project</button>
                 </div>
-
                 <div class="admin-box">
                     <h3 style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">Manage Projects</h3>
                     <div id="project-list">Loading...</div>
@@ -91,17 +60,16 @@
 
     <script>
         const SUPABASE_URL = "https://zypuzywbccswjdnnrktan.supabase.co";
-        
-        // --- PASTE YOUR LONG KEY HERE ---
-        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5cHV6eXdiY3N3amRubnJrdGFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3NDc2NDksImV4cCI6MjA4NjMyMzY0OX0.Y7tg_nqa96rUacMbgj2pY5SML3cJwB3tMHb3B5WDRLg"; 
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5cHV6eXdiY3N3amRubnJrdGFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3NDc2NDksImV4cCI6MjA4NjMyMzY0OX0.Y7tg_nqa96rUacMbgj2pY5SML3cJwB3tMHb3B5WDRLg"; // <--- PASTE KEY HERE
 
         const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         async function login() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            // This is the line that failed because you didn't have a user yet!
             const { error } = await client.auth.signInWithPassword({ email, password });
-            if (error) alert("Login Failed");
+            if (error) alert("Login Failed: " + error.message);
             else {
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('admin-panel').style.display = 'block';
@@ -112,8 +80,9 @@
         async function uploadOwner() {
             const file = document.getElementById('owner-image').files[0];
             if(!file) return alert("Select file first");
-            await client.storage.from('jmech-assets').upload('owner.png', file, { upsert: true });
-            alert("Owner Photo Updated!");
+            // Cache control '0' forces browser to see new image immediately
+            await client.storage.from('jmech-assets').upload('owner.png', file, { upsert: true, cacheControl: '0' });
+            alert("Owner Photo Updated! (Refresh home page to see)");
         }
 
         async function uploadProject() {
@@ -136,12 +105,8 @@
             const { data } = await client.from('projects').select('*').order('created_at', {ascending: false});
             div.innerHTML = "";
             if(data.length === 0) div.innerHTML = "No projects found.";
-            
             data.forEach(p => {
-                div.innerHTML += `<div class="project-item">
-                    <span><b>${p.title}</b> <small>(${p.category})</small></span>
-                    <button class="delete-btn" onclick="del('${p.id}')">DELETE</button>
-                </div>`;
+                div.innerHTML += `<div class="project-item"><span><b>${p.title}</b> <small>(${p.category})</small></span><button class="delete-btn" onclick="del('${p.id}')">DELETE</button></div>`;
             });
         }
 
@@ -153,4 +118,7 @@
         }
     </script>
 </body>
+</html>
+</body>
+
 </html>
