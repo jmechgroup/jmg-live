@@ -4,61 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Work | JMECH GROUP</title>
-    
     <link rel="icon" type="image/jpeg" href="logo.jpg">
     <link rel="stylesheet" href="style.css">
-    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
     <style>
-        /* Grid Styling */
-        #project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 50px 0;
-        }
-        .project-card {
-            background: #fff;
-            border: 1px solid #ddd;
-            transition: 0.3s;
-        }
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        .project-img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            filter: grayscale(100%);
-            border-bottom: 1px solid #ddd;
-        }
+        #project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 50px 0; }
+        .project-card { background: #fff; border: 1px solid #ddd; transition: 0.3s; }
+        .project-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .project-img { width: 100%; height: 250px; object-fit: cover; filter: grayscale(100%); border-bottom: 1px solid #ddd; }
         .project-info { padding: 20px; }
         .project-cat { font-size: 12px; font-weight: bold; color: #777; text-transform: uppercase; }
         .project-title { font-size: 18px; font-weight: bold; margin-top: 5px; color: #000; }
     </style>
 </head>
 <body>
-
     <header class="navbar">
         <div class="container nav-flex">
-            <a href="index.html" class="logo-link">
-                <div class="logo">
-                    <img src="logo.jpg" alt="JMECH GROUP" style="height: 70px; width: auto;">
-                </div>
-            </a>
-            
+            <a href="index.html" class="logo-link"><div class="logo"><img src="logo.jpg" alt="JMECH GROUP" style="height: 70px; width: auto;"></div></a>
             <nav id="nav-menu">
                 <a href="index.html">Home</a>
                 <a href="index.html#about">About</a>
                 <a href="gallery.html" class="active" style="font-weight: bold; border-bottom: 2px solid white;">Work</a>
                 <a href="index.html#contact">Contact</a>
             </nav>
-            
-            <div class="mobile-toggle" onclick="document.getElementById('nav-menu').classList.toggle('active')">
-                &#9776;
-            </div>
+            <div class="mobile-toggle" onclick="document.getElementById('nav-menu').classList.toggle('active')">&#9776;</div>
         </div>
     </header>
 
@@ -71,67 +40,35 @@
 
     <section class="section-padding">
         <div class="container">
-            <div id="project-grid">
-                <p style="text-align: center; width: 100%;">Loading projects...</p>
-            </div>
+            <div id="project-grid"><p style="text-align: center; width: 100%;">Loading projects...</p></div>
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 JMECH GROUP. All Rights Reserved.</p>
-        </div>
-    </footer>
+    <footer><div class="container"><p>&copy; 2026 JMECH GROUP. All Rights Reserved.</p></div></footer>
 
     <script>
-        // --- 1. CONFIGURATION ---
         const SUPABASE_URL = "https://zypuzywbccswjdnnrktan.supabase.co"; 
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5cHV6eXdiY3N3amRubnJrdGFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3NDc2NDksImV4cCI6MjA4NjMyMzY0OX0.Y7tg_nqa96rUacMbgj2pY5SML3cJwB3tMHb3B5WDRLg"; // <--- PASTE KEY HERE
 
-        // PASTE YOUR LONG KEY HERE:
-        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5cHV6eXdiY3N3amRubnJrdGFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3NDc2NDksImV4cCI6MjA4NjMyMzY0OX0.Y7tg_nqa96rUacMbgj2pY5SML3cJwB3tMHb3B5WDRLg"; 
-
-        // --- 2. INIT ---
         const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // --- 3. LOAD PROJECTS ---
         async function loadProjects() {
             const grid = document.getElementById('project-grid');
-            
-            const { data: projects, error } = await client
-                .from('projects')
-                .select('*')
-                .order('created_at', { ascending: false });
+            const { data: projects, error } = await client.from('projects').select('*').order('created_at', { ascending: false });
 
-            if (error) {
-                grid.innerHTML = "<p>Error loading content.</p>";
-                console.error(error);
-                return;
-            }
-
-            if (!projects || projects.length === 0) {
-                grid.innerHTML = "<p style='text-align:center;'>No projects uploaded yet.</p>";
-                return;
-            }
+            if (error) { grid.innerHTML = "<p>Error loading content.</p>"; return; }
+            if (!projects || projects.length === 0) { grid.innerHTML = "<p style='text-align:center;'>No projects uploaded yet.</p>"; return; }
 
             grid.innerHTML = ""; 
-
             projects.forEach(proj => {
                 const card = document.createElement('div');
                 card.className = 'project-card';
-                card.innerHTML = `
-                    <img src="${proj.image_url}" class="project-img" alt="${proj.title}">
-                    <div class="project-info">
-                        <div class="project-cat">${proj.category}</div>
-                        <div class="project-title">${proj.title}</div>
-                    </div>
-                `;
+                card.innerHTML = `<img src="${proj.image_url}" class="project-img" alt="${proj.title}"><div class="project-info"><div class="project-cat">${proj.category}</div><div class="project-title">${proj.title}</div></div>`;
                 grid.appendChild(card);
             });
         }
-
         loadProjects();
     </script>
-
     <script src="app.js"></script>
 </body>
 </html>
