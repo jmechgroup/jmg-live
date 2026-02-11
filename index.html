@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JMECH GROUP | Industrial Supplies</title>
+    
+    <link rel="icon" type="image/jpeg" href="logo.jpg">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        /* Owner Photo Styling */
+        #owner-photo {
+            width: 100%;
+            max-width: 350px;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 10px 10px 0px #000;
+            display: none; 
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="container nav-flex">
+            <a href="index.html" class="logo-link">
+                <div class="logo">
+                    <img src="logo.jpg" alt="JMECH GROUP" style="height: 70px; width: auto;">
+                </div>
+            </a>
+            
+            <nav id="nav-menu">
+                <a href="#about">About</a>
+                <a href="#services">Offerings</a>
+                <a href="gallery.html">Work</a>
+                <a href="#certificates">Certificates</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            
+            <div class="mobile-toggle" onclick="document.getElementById('nav-menu').classList.toggle('active')">
+                &#9776;
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>YOUR PRODUCT & SERVICE SOLUTIONS</h1>
+            <p>"Unity is Strength"</p>
+            <p>Quality Components, Technical Excellence, Verified Reliability</p>
+            <div>
+                <a href="gallery.html" class="btn btn-primary">View Projects</a>
+                <a href="#contact" class="btn btn-outline">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="stats-banner">
+        <div class="container stats-grid">
+            <div class="stat-item"><h3>ISO 9001</h3><p>Certified Standards</p></div>
+            <div class="stat-item"><h3>Nationwide</h3><p>Logistics & Delivery</p></div>
+            <div class="stat-item"><h3>24/7</h3><p>Technical Support</p></div>
+        </div>
+    </section>
+
+    <section id="about" class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-text">
+                    <div class="section-header">
+                        <h2>Who We Are</h2>
+                    </div>
+                    <p>JMECH GROUP is dedicated to providing top-tier products and services. We focus on simplicity, affordability, accessibility and reliability. We are customer driven, transparent and focused on building relationships with our clientele.</p>
+                    <br>
+                    <p><strong>The OWNER</strong></p>
+                    <p>A owner who came from hardship, going through the ranks of poverty. He decided it was time for change. He established JMECHGROUP, not with the intention of becoming rich but to a sustainable future, to uplift others, create opportunities and give back to the community.</p>
+                </div>
+                <div class="col-image" style="display: flex; justify-content: center; align-items: center;">
+                    <img id="owner-photo" src="" alt="JMECH Owner">
+                    <div id="owner-placeholder" class="placeholder-box" style="display:none; padding: 50px; border: 2px dashed #ccc;">
+                        OWNER PHOTO (Upload via Admin)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section-padding bg-grey">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Offerings</h2>
+            </div>
+            
+            <div class="row" style="align-items: flex-start;">
+                <div class="col-text">
+                    <h3 style="border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px;">Products</h3>
+                    <ul class="custom-list">
+                        <li>Multi Purpose Cleaners</li>
+                        <li>Agriculture Parts</li>
+                        <li>Requested Supplies</li>
+                        <li>Small Plant Parts</li>
+                        <li>Steel Supplies</li>
+                        <li>Welding Supplies</li>
+                        <li>Heavy Plant Parts</li>
+                        <li>Specialised Parts</li>
+                        <li>Hose, Fittings & Valve Supplies</li>
+                        <li>Hardware Supplies</li>
+                        <li>Trailer Parts</li>
+                        <li>Stationary Supplies</li>
+                        <li>Automotive Supplies</li>
+                        <li>Marine Supplies</li>
+                    </ul>
+                </div>
+                <div class="col-text">
+                    <h3 style="border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px;">Services</h3>
+                    <ul class="custom-list">
+                        <li>Mechanical Repairs</li>
+                        <li>Hydraulic Repairs</li>
+                        <li>Seaworthy Certifications</li>
+                        <li>Marine Repairs & Service</li>
+                        <li>Earthmoving Repairs</li>
+                        <li>Fleet Maintenance</li>
+                        <li>Manufacturing</li>
+                        <li>Window Tinting</li>
+                        <li>Cable Repairs</li>
+                        <li>Transport & Logistics</li>
+                        <li>Travel & Tours</li>
+                        <li>Marketing</li>
+                        <li>Business Coaching</li>
+                        <li>Refurbishments</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="certificates" class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>Certificates & Accreditations</h2>
+            </div>
+            <div class="grid-container" id="cert-grid">
+                <p>Coming Soon</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section-padding bg-grey">
+        <div class="container">
+            <div class="section-header">
+                <h2>Contact Us</h2>
+            </div>
+            <div class="row">
+                <div class="col-text">
+                    <p><strong>Email:</strong> jmechgroup@gmail.com</p>
+                    <p><strong>Phone:</strong> +27 76 424 7637</p>
+                    <p><strong>Location:</strong> Cape Town, South Africa</p>
+                </div>
+                
+                <div class="col-text">
+                    <form id="contact-form">
+                        <input type="text" name="user_name" id="user_name" placeholder="Your Name" required>
+                        <input type="email" name="user_email" id="user_email" placeholder="Your Email" required>
+                        <textarea name="message" id="message" rows="4" placeholder="Message or Request" required></textarea>
+                        <button type="submit" class="btn btn-primary" id="send-btn">Send Message</button>
+                    </form>
+                    <p id="form-status" style="margin-top: 10px; font-weight: bold;"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 JMECH GROUP. All Rights Reserved.</p>
+            <br>
+            <a href="admin.html">Admin Login</a>
+        </div>
+    </footer>
+
+    <script>
+        const SUPABASE_URL = "https://zypuzywbccswjdnnrktan.supabase.co"; 
+        
+        // --- PASTE YOUR LONG KEY HERE ---
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5cHV6eXdiY3N3amRubnJrdGFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3NDc2NDksImV4cCI6MjA4NjMyMzY0OX0.Y7tg_nqa96rUacMbgj2pY5SML3cJwB3tMHb3B5WDRLg"; 
+
+        const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // Load Owner Photo
+        const ownerImg = document.getElementById('owner-photo');
+        const ownerUrl = `${SUPABASE_URL}/storage/v1/object/public/jmech-assets/owner.png?t=${Date.now()}`;
+        
+        const tempImg = new Image();
+        tempImg.src = ownerUrl;
+        tempImg.onload = function() {
+            ownerImg.src = ownerUrl;
+            ownerImg.style.display = 'block';
+        };
+        tempImg.onerror = function() {
+            document.getElementById('owner-placeholder').style.display = 'block';
+        };
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>
