@@ -138,4 +138,5 @@ async function deleteProject(id) {
         // Refresh the list
         fetchProjects();
     }
+
 }
