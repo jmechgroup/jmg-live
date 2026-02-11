@@ -59,18 +59,22 @@
     </section>
 
     <script>
+        // FIXED URL (Removed the extra 'c')
         const SUPABASE_URL = "https://zypuzywbcswjdnnrktan.supabase.co";
-        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5cHV6eXdiY3N3amRubnJrdGFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3NDc2NDksImV4cCI6MjA4NjMyMzY0OX0.Y7tg_nqa96rUacMbgj2pY5SML3cJwB3tMHb3B5WDRLg"; // <--- PASTE KEY HERE
+        
+        // PASTE YOUR LONG KEY HERE
+        const SUPABASE_KEY = "PASTE_YOUR_LONG_KEY_HERE"; 
 
         const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         async function login() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            // This is the line that failed because you didn't have a user yet!
             const { error } = await client.auth.signInWithPassword({ email, password });
-            if (error) alert("Login Failed: " + error.message);
-            else {
+            if (error) {
+                console.error(error);
+                alert("Login Failed: " + error.message);
+            } else {
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('admin-panel').style.display = 'block';
                 fetchProjects();
@@ -80,7 +84,6 @@
         async function uploadOwner() {
             const file = document.getElementById('owner-image').files[0];
             if(!file) return alert("Select file first");
-            // Cache control '0' forces browser to see new image immediately
             await client.storage.from('jmech-assets').upload('owner.png', file, { upsert: true, cacheControl: '0' });
             alert("Owner Photo Updated! (Refresh home page to see)");
         }
@@ -104,7 +107,10 @@
             const div = document.getElementById('project-list');
             const { data } = await client.from('projects').select('*').order('created_at', {ascending: false});
             div.innerHTML = "";
-            if(data.length === 0) div.innerHTML = "No projects found.";
+            if(!data || data.length === 0) {
+                div.innerHTML = "No projects found.";
+                return;
+            }
             data.forEach(p => {
                 div.innerHTML += `<div class="project-item"><span><b>${p.title}</b> <small>(${p.category})</small></span><button class="delete-btn" onclick="del('${p.id}')">DELETE</button></div>`;
             });
@@ -119,7 +125,3 @@
     </script>
 </body>
 </html>
-</body>
-
-</html>
-
